@@ -1,110 +1,6 @@
 // ── APP.JS ── THE LEDGER INTERACTIVE TWO-PANEL SPLIT CONTROLLER
 // Pair programmed for premium PPSC candidate UX: Dashboard + Folders + Map Routing + 100-MCQ Booklet + Atlas
 
-// ── TACTICAL AUDIO SYSTEM (Web Audio API Synthesizer) ──
-const TacticalAudio = {
-  ctx: null,
-  muted: false,
-
-  init() {
-    if (this.ctx) return;
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (AudioContext) {
-      this.ctx = new AudioContext();
-    }
-  },
-
-  playBeep(freq = 1200, duration = 0.06, type = 'sine', gainVal = 0.04) {
-    if (this.muted) return;
-    this.init();
-    if (!this.ctx) return;
-    
-    if (this.ctx.state === 'suspended') {
-      this.ctx.resume();
-    }
-
-    const osc = this.ctx.createOscillator();
-    const gainNode = this.ctx.createGain();
-
-    osc.type = type;
-    osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
-
-    gainNode.gain.setValueAtTime(gainVal, this.ctx.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration - 0.01);
-
-    osc.connect(gainNode);
-    gainNode.connect(this.ctx.destination);
-
-    osc.start();
-    osc.stop(this.ctx.currentTime + duration);
-  },
-
-  // Project IGI Decryption sequence: 5 rapid rhythmic beeps
-  playDecryptionSequence() {
-    if (this.muted) return;
-    this.init();
-    if (!this.ctx) return;
-    
-    if (this.ctx.state === 'suspended') {
-      this.ctx.resume();
-    }
-
-    const now = this.ctx.currentTime;
-    for (let i = 0; i < 5; i++) {
-      const playTime = now + (i * 0.09); // Rhythmic 90ms spacing
-      const osc = this.ctx.createOscillator();
-      const gainNode = this.ctx.createGain();
-
-      osc.type = 'sine';
-      // Pitch goes up slightly on the final resolved beep
-      const freq = (i === 4) ? 1700 : 1350;
-      osc.frequency.setValueAtTime(freq, playTime);
-
-      gainNode.gain.setValueAtTime(0.03, playTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.001, playTime + 0.05);
-
-      osc.connect(gainNode);
-      gainNode.connect(this.ctx.destination);
-
-      osc.start(playTime);
-      osc.stop(playTime + 0.06);
-    }
-  },
-
-  playTypewriterClick() {
-    if (this.muted) return;
-    this.init();
-    if (!this.ctx) return;
-    
-    if (this.ctx.state === 'suspended') {
-      this.ctx.resume();
-    }
-
-    const osc = this.ctx.createOscillator();
-    const gainNode = this.ctx.createGain();
-
-    osc.type = 'triangle';
-    // Organic frequency variation for each letter
-    const freq = 500 + Math.random() * 300;
-    osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
-
-    gainNode.gain.setValueAtTime(0.01, this.ctx.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.015);
-
-    osc.connect(gainNode);
-    gainNode.connect(this.ctx.destination);
-
-    osc.start();
-    osc.stop(this.ctx.currentTime + 0.02);
-  }
-};
-
-function toggleSound() {
-  TacticalAudio.muted = !TacticalAudio.muted;
-  const icon = document.getElementById('sound-icon');
-  if (icon) {
-    icon.innerText = TacticalAudio.muted ? '🔇' : '🔊';
-  }
 }
 
 
@@ -1529,13 +1425,11 @@ function filterDatabase() {
 }
 
 function navigateInto(folderName) {
-  TacticalAudio.playDecryptionSequence();
   currentPath.push(folderName);
   renderDirectory();
 }
 
 function navigateBack() {
-  TacticalAudio.playBeep(900, 0.1);
   if (activeExam) {
     if (!activeExam.submitted && !confirm("Quit the Mock Exam? Your progress will be lost.")) {
       return;
@@ -1565,7 +1459,6 @@ function navigateBack() {
 }
 
 function setMode(mode) {
-  TacticalAudio.playDecryptionSequence();
   currentMode = mode;
   currentPath = ['Root'];
   selectedDossier = null;
@@ -1626,7 +1519,6 @@ function renderSearchResults(container) {
 
 // 5. Select File (Triggering high-fidelity Map Focus, Routes, Orgs, and Regions highlights)
 function selectFile(dossier) {
-  TacticalAudio.playDecryptionSequence();
   selectedDossier = dossier;
   renderDirectory();
   
@@ -2601,9 +2493,6 @@ function typeWriterEffect(elementId, text, speed = 15) {
   elem.typewriterInterval = setInterval(() => {
     if (i < text.length) {
       elem.innerHTML += text.charAt(i);
-      if (text.charAt(i) !== ' ') {
-        TacticalAudio.playTypewriterClick();
-      }
       i++;
     } else {
       clearInterval(elem.typewriterInterval);
