@@ -1913,6 +1913,89 @@ function launchMockExam(paperName) {
   document.getElementById('dossier-list').scrollTop = 0;
 }
 
+function focusExamQuestion(idx) {
+  if (!activeExam || !map) return;
+  const q = activeExam.questions[idx];
+  if (!q) return;
+  
+  const dossier = q.dossier;
+  
+  // Highlight active question item in left panel
+  document.querySelectorAll('.exam-question-item').forEach(el => el.classList.remove('active-focus'));
+  const activeEl = document.getElementById(`exam-q-${idx}`);
+  if (activeEl) activeEl.classList.add('active-focus');
+  
+  // Clear any existing organisation & region overlays first
+  orgOverlays.forEach(layer => map.removeLayer(layer));
+  orgOverlays = [];
+  regionOverlays.forEach(layer => map.removeLayer(layer));
+  regionOverlays = [];
+  
+  // Reset route styles
+  mapPolylines.forEach(p => {
+    const route = MAP_ROUTES.find(r => r.id === p.options.routeId);
+    if (route) {
+      p.setStyle({
+        color: route.color,
+        weight: 4,
+        opacity: 0.8
+      });
+      const el = p.getElement();
+      if (el) el.classList.remove('marching-ants-active');
+    }
+  });
+  
+  // Compile texts to match
+  const textToMatch = (dossier.dossier_name + " " + dossier.question + " " + dossier.context + " " + (dossier.overview || "") + " " + dossier.connections.join(' ')).toLowerCase();
+  
+  // Match Route
+  let matchedRouteId = null;
+  if (textToMatch.includes("karakoram") || /\bkkh\\/.test(textToMatch)) matchedRouteId = "route-kkh";
+  else if (/\bindus\\/.test(textToMatch)) matchedRouteId = "route-indus";
+  else if (/\bdurand\\/.test(textToMatch)) matchedRouteId = "route-durand";
+  else if (textToMatch.includes("sino-pak") || textToMatch.includes("sino-pakistan")) matchedRouteId = "route-sinopak";
+  else if (/\bkhyber\\/.test(textToMatch)) matchedRouteId = "route-khyber";
+  else if (/\bbolan\\/.test(textToMatch)) matchedRouteId = "route-bolan";
+  else if (/\bbabusar\\/.test(textToMatch)) matchedRouteId = "route-babusar";
+  else if (/\blowari\\/.test(textToMatch)) matchedRouteId = "route-lowari";
+  
+  // Match Organisation
+  let matchedOrgId = null;
+  if (/\bsaarc\\/.test(textToMatch)) matchedOrgId = "org-saarc";
+  else if (/\beco\\/.test(textToMatch) || textToMatch.includes("economic cooperation")) matchedOrgId = "org-eco";
+  else if (/\bsco\\/.test(textToMatch) || textToMatch.includes("shanghai cooperation")) matchedOrgId = "org-sco";
+  else if (/\boic\\/.test(textToMatch) || textToMatch.includes("islamic cooperation")) matchedOrgId = "org-oic";
+  else if (/\bnato\\/.test(textToMatch) || textToMatch.includes("north atlantic")) matchedOrgId = "org-nato";
+  else if (textToMatch.includes("united nations") || /\bun\\/.test(textToMatch)) matchedOrgId = "org-un";
+  
+  // Match Region
+  let matchedRegionId = null;
+  if (/\bkashmir\\/.test(textToMatch)) matchedRegionId = "region-kashmir";
+  else if (/\bgaza\\/.test(textToMatch)) matchedRegionId = "region-gaza";
+  else if (/\btaiwan\\/.test(textToMatch)) matchedRegionId = "region-taiwan";
+  else if (/\bfalkland\\/.test(textToMatch)) matchedRegionId = "region-falkland";
+  else if (/\bkuril\\/.test(textToMatch)) matchedRegionId = "region-kuril";
+  else if (/\bgibraltar\\/.test(textToMatch)) matchedRegionId = "region-gibraltar";
+  else if (/\bmalacca\\/.test(textToMatch)) matchedRegionId = "region-malacca";
+  else if (/\bhormuz\\/.test(textToMatch)) matchedRegionId = "region-hormuz";
+  else if (/\bbab-el-mandeb\\/.test(textToMatch) || /\bmandeb\\/.test(textToMatch)) matchedRegionId = "region-bab";
+
+  // Trigger Map updates based on priorities
+  if (matchedOrgId) {
+    highlightOrganisationOnMap(matchedOrgId);
+  } else if (matchedRegionId) {
+    highlightRegionOnMap(matchedRegionId);
+  } else if (matchedRouteId) {
+    highlightRouteOnMap(matchedRouteId);
+  } else if (dossier.coordinates) {
+    map.flyTo(dossier.coordinates, 6.5, { animate: true, duration: 1.2 });
+    if (mapMarkers[dossier.id]) {
+      mapMarkers[dossier.id].openTooltip();
+    }
+  }
+}
+
+
 function renderExamBookletHTML(container) {
   const booklet = document.createElement('div');
   booklet.className = 'exam-booklet';
@@ -1964,9 +2047,22 @@ function renderExamBookletHTML(container) {
           `;
         }
         
+        const hasGeo = !!(q.dossier.coordinates || 
+                          q.dossier.question.toLowerCase().includes("river") || 
+                          q.dossier.question.toLowerCase().includes("pass") || 
+                          q.dossier.question.toLowerCase().includes("capital") ||
+                          q.dossier.question.toLowerCase().includes("border") || 
+                          q.dossier.question.toLowerCase().includes("strait"));
+        const geoTag = hasGeo 
+          ? '<span class="tag-badge" style="color: var(--color-accent); border-color: var(--color-accent); font-size: 8px;">🗺️ LOCATE NODE</span>'
+          : '<span class="tag-badge" style="color: var(--text-muted); border-color: var(--border); font-size: 8px;">📂 RECORD ONLY</span>';
+          
         return `
-          <div class="exam-question-item">
-            <div class="exam-q-num">QUESTION ${idx + 1} OF 100</div>
+          <div class="exam-question-item" id="exam-q-${idx}" onclick="focusExamQuestion(${idx})" style="cursor: pointer; transition: all 0.2s;">
+            <div class="exam-q-num" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+              <span>QUESTION ${idx + 1} OF 100</span>
+              ${geoTag}
+            </div>
             <div class="exam-q-text">${q.dossier.question}</div>
             
             <div class="exam-options-grid">
@@ -1983,7 +2079,7 @@ function renderExamBookletHTML(container) {
                 }
                 
                 const disabledAttr = activeExam.submitted ? 'disabled' : '';
-                const clickAction = activeExam.submitted ? '' : `onclick="selectExamOption(${idx}, '${opt.replace(/'/g, "\\'")}')"`;
+                const clickAction = activeExam.submitted ? '' : `onclick="event.stopPropagation(); selectExamOption(${idx}, '${opt.replace(/'/g, "\'")}')"`;
                 
                 return `
                   <button class="exam-opt-btn ${statusClass}" ${disabledAttr} ${clickAction}>
@@ -2026,6 +2122,9 @@ function selectExamOption(questionIdx, optionText) {
   renderExamBookletHTML(container);
   
   document.getElementById('exam-questions-sheet').scrollTop = scrollPos;
+  
+  // Focus on map
+  focusExamQuestion(questionIdx);
 }
 
 function submitMockExam() {

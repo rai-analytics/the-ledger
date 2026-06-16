@@ -1550,3 +1550,10 @@ body {
 }
 
 
+
+/* Active focused question item in mock exam booklet */
+.exam-question-item.active-focus {
+  border-color: var(--color-accent) !important;
+  background-color: var(--bg-card) !important;
+  box-shadow: 0 0 10px rgba(124, 92, 245, 0.2);
+}
