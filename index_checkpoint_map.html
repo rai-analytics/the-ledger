@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Ledger — PPSC Mnemonic Terminal</title>
+  
+  <!-- Premium Fonts from Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Share+Tech+Mono&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Vis.js Library for Network Graph Sourcing (Using CDN) -->
+  <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+  
+  <!-- Leaflet.js for Tactical Geographical Maps -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  
+  <!-- Link to external stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- TOP CONSOLE HEADER -->
+  <header class="console-header">
+    <div class="brand-block">
+      <div class="logo-indicator"></div>
+      <h1 class="console-title">THE LEDGER</h1>
+      <span class="console-subtitle">// PPSC.INTEL.TERMINAL</span>
+    </div>
+    
+    <!-- STATS AND PROGRESS BAR -->
+    <div class="header-stats">
+      <div class="stat-box">
+        <span class="stat-label">RANK:</span>
+        <span class="stat-value" id="user-rank">Field Informant</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-label">XP:</span>
+        <span class="stat-value" id="user-xp">0000</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-label">INTEGRITY:</span>
+        <div class="integrity-progress-wrap">
+          <div class="integrity-bar" id="integrity-bar" style="width: 0%;"></div>
+          <span class="integrity-val" id="integrity-val">0%</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- CONFIG CONTROLS -->
+    <div class="header-controls">
+      <button class="btn-terminal" id="btn-drill-launch" onclick="launchDrillMode()">
+        <svg class="icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+        ✍️ QUIZ ME
+      </button>
+      <button class="btn-theme-toggle" id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle visual theme">
+        <span class="theme-icon">🌙</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MOBILE VIEW PANEL SWITCHER -->
+  <div class="mobile-panel-tabs">
+    <button class="mobile-tab active" id="mobile-tab-left" onclick="switchMobilePanel('left')">📁 CHANNELS</button>
+    <button class="mobile-tab" id="mobile-tab-center" onclick="switchMobilePanel('center')">🕸️ WEB</button>
+    <button class="mobile-tab" id="mobile-tab-right" onclick="switchMobilePanel('right')">📄 BRIEFING</button>
+  </div>
+
+  <!-- MAIN TERMINAL AREA -->
+  <main class="terminal-container">
+    
+    <!-- LEFT PANEL: SOURCING & SEARCH -->
+    <section class="panel panel-left mobile-active">
+      <div class="panel-header" style="display: flex; justify-content: space-between; align-items: center;">
+        <h2>INTEL CHANNELS</h2>
+        <div class="mode-toggle-wrap">
+          <button class="mode-toggle-btn active" id="btn-mode-folders" onclick="setMode('folders')">FOLDERS</button>
+          <button class="mode-toggle-btn" id="btn-mode-timeline" onclick="setMode('timeline')">TIMELINE</button>
+          <button class="mode-toggle-btn" id="btn-mode-papers" onclick="setMode('papers')">PAPERS</button>
+        </div>
+      </div>
+      
+      <!-- SEARCH BAR -->
+      <div class="search-wrap">
+        <input type="text" id="console-search" placeholder="Query name, date, or tag..." oninput="handleSearch()">
+        <svg class="search-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </div>
+      
+      <!-- DIVISION SELECTORS -->
+      <div class="division-tabs">
+        <button class="tab-btn active" onclick="switchDivision('all')">ALL</button>
+        <button class="tab-btn" onclick="switchDivision('The Archive')">ARCHIVE</button>
+        <button class="tab-btn" onclick="switchDivision('Cartography')">MAPS</button>
+        <button class="tab-btn" onclick="switchDivision('Surveillance')">SURVEILLANCE</button>
+        <button class="tab-btn" onclick="switchDivision('The Laboratory')">LAB</button>
+        <button class="tab-btn" onclick="switchDivision('The Codebook')">CODEBOOK</button>
+        <button class="tab-btn" onclick="switchDivision('The Charter')">CHARTER</button>
+      </div>
+      
+      <!-- FILES LIST -->
+      <div class="dossier-list" id="dossier-list">
+        <!-- Rendered dynamically -->
+      </div>
+      
+      <!-- UTILITIES: IMPORTER -->
+      <div class="panel-footer">
+        <label class="btn-import-label">
+          <input type="file" id="json-importer" accept=".json" style="display:none;" onchange="importIntelPack(event)">
+          LOAD INTEL PACK (.JSON)
+        </label>
+      </div>
+    </section>
+
+    <!-- CENTER AREA: INTERACTIVE GRAPH MAP -->
+    <section class="panel panel-center">
+      <div class="panel-header" style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+        <div>
+          <h2 id="center-panel-title">CONNECTION WEB</h2>
+          <span class="panel-header-sub" id="center-panel-sub">Drag and zoom nodes to reveal links</span>
+        </div>
+        <div class="mode-toggle-wrap">
+          <button class="mode-toggle-btn active" id="btn-view-web" onclick="switchCenterView('web')">WEB</button>
+          <button class="mode-toggle-btn" id="btn-view-map" onclick="switchCenterView('map')">MAP</button>
+        </div>
+      </div>
+      
+      <!-- Graph Canvas Container -->
+      <div id="network-graph" class="graph-canvas"></div>
+      
+      <!-- Tactical Map Container -->
+      <div id="tactical-map" class="map-canvas" style="display: none;"></div>
+    </section>
+
+    <!-- RIGHT PANEL: DOSSIER BRIEFING -->
+    <section class="panel panel-right">
+      <div class="panel-header">
+        <h2>DOSSIER BRIEFING</h2>
+      </div>
+      
+      <div class="dossier-briefing-wrap" id="dossier-briefing">
+        <div class="empty-state">
+          <svg class="briefcase-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+          </svg>
+          <p>Select a node in the web or choose a file from the database to open its dossier.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FULLSCREEN DRILL BRIEFING OVERLAY -->
+  <div class="drill-overlay" id="drill-overlay">
+    <div class="drill-modal">
+      <div class="drill-header">
+        <div class="brand-block">
+          <div class="logo-indicator active"></div>
+          <span class="drill-heading">ACTIVE INTEL DRILL</span>
+        </div>
+        <button class="btn-close-drill" onclick="exitDrillMode()">&times;</button>
+      </div>
+      
+      <div class="drill-content" id="drill-content">
+        <!-- Loaded dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPT FILES -->
+  <script src="db.js"></script>
+  <script src="briefings.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

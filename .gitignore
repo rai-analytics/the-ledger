@@ -1,0 +1,26 @@
+# Ignore Large Documents & PDFs
+*.pdf
+PPSC/*.pdf
+
+# Ignore Temporary OCR Render Images
+temp_ppsc_page_*.jpg
+temp_ppsc_page_*.png
+PPSC/temp_ppsc_page_*.jpg
+PPSC/temp_ppsc_page_*.png
+temp_ppsc_page.jpg
+PPSC/temp_ppsc_page.jpg
+
+# Ignore Python Cache and Build Artifacts
+__pycache__/
+*.pyc
+PPSC/__pycache__/
+
+# Ignore API Keys & Secrets (CRITICAL SECURITY)
+api_key.txt
+PPSC/api_key.txt
+.env
+
+# Ignore OS files
+Thumbs.db
+Desktop.ini
+.DS_Store
