@@ -62,11 +62,217 @@ const MAP_ROUTES = [
       [34.0875, 72.6972], // Tarbela
       [32.9584, 71.5389], // Kalabagh
       [31.8333, 70.9010], // D.I. Khan
-      [27.6892, 68.8267], // Sukkur
+      [27.6892, 68.8267], // Sukkur Barrage
       [25.3960, 68.3578], // Hyderabad
       [23.95, 67.45]      // Arabian Sea Delta
     ],
-    places: ["Tibet Source", "Leh Ladakh", "Bunji GB", "Tarbela", "Kalabagh", "D.I. Khan", "Sukkur Barrage", "Hyderabad", "Arabian Sea"]
+    places: ["Tibet Source", "Leh Ladakh", "Bunji GB", "Tarbela", "Kalabagh", "D.I. Khan", "Sukkur", "Hyderabad", "Arabian Sea"]
+  },
+  {
+    id: "route-nile",
+    name: "Nile River Path",
+    category: "rivers",
+    type: "river",
+    color: "#00E5FF", // Neon Cyan
+    length: "6,650 km",
+    description: "The longest river in the world, flowing northwards through northeastern Africa to the Mediterranean Sea.",
+    coords: [
+      [2.0, 32.3],   // Lake Victoria (Uganda)
+      [9.5, 31.6],   // South Sudan
+      [15.6, 32.5],  // Khartoum (Sudan)
+      [19.0, 32.0],  // Sudan Bend
+      [24.0, 32.9],  // Aswan (Egypt)
+      [30.0, 31.2],  // Cairo (Egypt)
+      [31.5, 31.0]   // Delta (Mediterranean Sea)
+    ],
+    places: ["Lake Victoria", "South Sudan", "Khartoum", "Aswan Dam", "Cairo", "Mediterranean Sea"]
+  },
+  {
+    id: "route-amazon",
+    name: "Amazon River Path",
+    category: "rivers",
+    type: "river",
+    color: "#00E5FF", // Neon Cyan
+    length: "6,400 km",
+    description: "The largest river in the world by water flow, winding through the dense South American rainforest.",
+    coords: [
+      [-4.5, -73.5], // Peru Source
+      [-3.4, -65.0], // Western Brazil
+      [-3.1, -60.0], // Manaus
+      [-2.5, -54.0], // Obidos
+      [-1.5, -49.0], // Macapa
+      [-0.1, -48.0]  // Atlantic Outlet
+    ],
+    places: ["Andes Source", "Manaus", "Macapa", "Atlantic Ocean"]
+  },
+  {
+    id: "route-yangtze",
+    name: "Yangtze River Path",
+    category: "rivers",
+    type: "river",
+    color: "#00E5FF", // Neon Cyan
+    length: "6,300 km",
+    description: "The longest river in Asia, flowing from the Tibetan Plateau to the East China Sea.",
+    coords: [
+      [33.0, 92.0],   // Qinghai Source
+      [27.0, 99.5],   // Yunnan Bend
+      [29.5, 106.5],  // Chongqing
+      [30.6, 114.3],  // Wuhan
+      [32.0, 118.8],  // Nanjing
+      [31.3, 121.5]   // Shanghai Delta
+    ],
+    places: ["Tibetan Plateau", "Chongqing", "Three Gorges", "Wuhan", "Nanjing", "Shanghai"]
+  },
+  {
+    id: "route-mississippi",
+    name: "Mississippi River Path",
+    category: "rivers",
+    type: "river",
+    color: "#00E5FF", // Neon Cyan
+    length: "3,730 km",
+    description: "The chief river of the largest drainage system in North America, flowing south to the Gulf of Mexico.",
+    coords: [
+      [47.2, -95.2], // Lake Itasca
+      [45.0, -93.2], // Minneapolis
+      [38.6, -90.2], // St. Louis
+      [35.1, -90.0], // Memphis
+      [32.3, -90.9], // Vicksburg
+      [30.0, -90.0], // New Orleans
+      [29.1, -89.2]  // Gulf of Mexico
+    ],
+    places: ["Lake Itasca", "Minneapolis", "St. Louis", "Memphis", "New Orleans", "Gulf of Mexico"]
+  },
+  {
+    id: "route-volga",
+    name: "Volga River Path",
+    category: "rivers",
+    type: "river",
+    color: "#00E5FF", // Neon Cyan
+    length: "3,530 km",
+    description: "The longest river in Europe, flowing through central Russia and widely regarded as Russia's national river.",
+    coords: [
+      [57.2, 32.5], // Valdai Hills Source
+      [56.8, 35.9], // Tver
+      [56.3, 44.0], // Nizhny Novgorod
+      [55.8, 49.1], // Kazan
+      [53.2, 50.1], // Samara
+      [48.7, 44.5], // Volgograd
+      [46.3, 48.0]  // Caspian Sea (Astrakhan)
+    ],
+    places: ["Valdai Hills", "Nizhny Novgorod", "Kazan", "Volgograd", "Astrakhan", "Caspian Sea"]
+  },
+  {
+    id: "route-ganges",
+    name: "Ganges River Path",
+    category: "rivers",
+    type: "river",
+    color: "#00E5FF", // Neon Cyan
+    length: "2,525 km",
+    description: "A trans-boundary river of Asia flowing through India and Bangladesh, sacred in Hinduism.",
+    coords: [
+      [31.0, 79.0],  // Himalayas Source
+      [30.0, 78.1],  // Haridwar
+      [26.5, 80.3],  // Kanpur
+      [25.5, 81.9],  // Allahabad
+      [25.3, 83.0],  // Varanasi
+      [25.6, 85.1],  // Patna
+      [24.0, 88.5],  // Bangladesh Border
+      [22.5, 89.5]   // Delta (Bay of Bengal)
+    ],
+    places: ["Himalayas", "Haridwar", "Allahabad", "Varanasi", "Patna", "Bay of Bengal"]
+  },
+  {
+    id: "route-danube",
+    name: "Danube River Path",
+    category: "rivers",
+    type: "river",
+    color: "#00E5FF", // Neon Cyan
+    length: "2,850 km",
+    description: "Europe's second-longest river, flowing through ten countries and four capitals from Germany to the Black Sea.",
+    coords: [
+      [48.0, 8.5],   // Black Forest Source
+      [48.3, 11.6],  // Regensburg
+      [48.2, 16.4],  // Vienna (Austria)
+      [47.5, 19.0],  // Budapest (Hungary)
+      [44.8, 20.5],  // Belgrade (Serbia)
+      [44.0, 26.3],  // Ruse
+      [45.2, 28.8]   // Black Sea Delta (Romania)
+    ],
+    places: ["Black Forest", "Vienna", "Budapest", "Belgrade", "Ruse", "Black Sea"]
+  },
+  {
+    id: "route-mekong",
+    name: "Mekong River Path",
+    category: "rivers",
+    type: "river",
+    color: "#00E5FF", // Neon Cyan
+    length: "4,350 km",
+    description: "A major trans-boundary river in East and Southeast Asia, vital for regional agriculture and trade.",
+    coords: [
+      [33.0, 94.0],   // Qinghai Source
+      [22.0, 100.5],  // Yunnan
+      [19.8, 102.1],  // Luang Prabang
+      [18.0, 102.6],  // Vientiane
+      [15.1, 105.8],  // Pakse
+      [11.6, 104.9],  // Phnom Penh
+      [10.2, 106.3]   // Delta (Vietnam)
+    ],
+    places: ["Tibet", "Yunnan", "Luang Prabang", "Vientiane", "Phnom Penh", "South China Sea"]
+  },
+  {
+    id: "route-congo",
+    name: "Congo River Path",
+    category: "rivers",
+    type: "river",
+    color: "#00E5FF", // Neon Cyan
+    length: "4,700 km",
+    description: "The deepest recorded river in the world, flowing twice across the Equator through Africa's heartland.",
+    coords: [
+      [-11.5, 26.5], // Lualaba Source
+      [-0.5, 25.2],  // Kisangani
+      [2.0, 22.5],   // Congo loop north
+      [-1.5, 17.0],  // Mbandaka
+      [-4.3, 15.3],  // Kinshasa
+      [-6.0, 12.4]   // Atlantic Outlet
+    ],
+    places: ["Katanga Source", "Kisangani", "Mbandaka", "Kinshasa", "Atlantic Ocean"]
+  },
+  {
+    id: "route-yellow",
+    name: "Yellow River Path (Huang He)",
+    category: "rivers",
+    type: "river",
+    color: "#00E5FF", // Neon Cyan
+    length: "5,464 km",
+    description: "The second-longest river in China, regarded as the cradle of Chinese civilization.",
+    coords: [
+      [34.5, 96.0],   // Bayankala Mountains
+      [36.1, 100.6],  // Lanzhou
+      [38.5, 106.2],  // Yinchuan
+      [40.8, 107.5],  // Inner Mongolia loop
+      [37.5, 110.5],  // Shanxi boundary
+      [34.8, 113.6],  // Zhengzhou
+      [37.8, 118.1]   // Bohai Sea Delta
+    ],
+    places: ["Bayankala Mountains", "Lanzhou", "Ordos Loop", "Zhengzhou", "Bohai Sea"]
+  },
+  {
+    id: "route-murray",
+    name: "Murray River Path",
+    category: "rivers",
+    type: "river",
+    color: "#00E5FF", // Neon Cyan
+    length: "2,508 km",
+    description: "The longest river in Australia, forming the border between New South Wales and Victoria.",
+    coords: [
+      [-36.5, 148.0], // Alps Source
+      [-36.0, 146.5], // Albury
+      [-34.2, 142.2], // Mildura
+      [-34.0, 140.0], // Renmark
+      [-35.3, 139.3], // Murray Bridge
+      [-35.5, 138.9]  // Lake Alexandrina
+    ],
+    places: ["Australian Alps", "Albury", "Mildura", "Renmark", "Lake Alexandrina"]
   },
   {
     id: "route-durand",
@@ -160,6 +366,79 @@ const MAP_ROUTES = [
       [35.8511, 71.7850]  // Chitral
     ],
     places: ["Dir Upper", "Lowari Pass", "Chitral City"]
+  }
+];
+
+const MAP_CONTINENTS = [
+  {
+    name: "Asia",
+    color: "#FFEA00",
+    coords: [
+      [80.0, 30.0],
+      [80.0, 170.0],
+      [10.0, 170.0],
+      [-10.0, 120.0],
+      [-10.0, 80.0],
+      [10.0, 30.0],
+      [80.0, 30.0]
+    ]
+  },
+  {
+    name: "Europe",
+    color: "#E040FB",
+    coords: [
+      [70.0, -20.0],
+      [70.0, 45.0],
+      [35.0, 45.0],
+      [35.0, -20.0],
+      [70.0, -20.0]
+    ]
+  },
+  {
+    name: "Africa",
+    color: "#00FF88",
+    coords: [
+      [37.0, -20.0],
+      [30.0, 32.0],
+      [12.0, 52.0],
+      [-35.0, 20.0],
+      [-35.0, 10.0],
+      [5.0, -15.0],
+      [37.0, -20.0]
+    ]
+  },
+  {
+    name: "North America",
+    color: "#00E5FF",
+    coords: [
+      [75.0, -170.0],
+      [75.0, -50.0],
+      [15.0, -80.0],
+      [15.0, -120.0],
+      [75.0, -170.0]
+    ]
+  },
+  {
+    name: "South America",
+    color: "#00E5FF",
+    coords: [
+      [12.0, -85.0],
+      [10.0, -35.0],
+      [-56.0, -67.0],
+      [-56.0, -78.0],
+      [12.0, -85.0]
+    ]
+  },
+  {
+    name: "Oceania",
+    color: "#FF5722",
+    coords: [
+      [-10.0, 110.0],
+      [-10.0, 170.0],
+      [-45.0, 170.0],
+      [-45.0, 110.0],
+      [-10.0, 110.0]
+    ]
   }
 ];
 
@@ -1257,35 +1536,35 @@ function selectFile(dossier) {
   
   // 1. Check Route match
   let matchedRouteId = null;
-  if (textToMatch.includes("karakoram") || textToMatch.includes("kkh")) matchedRouteId = "route-kkh";
-  else if (textToMatch.includes("indus")) matchedRouteId = "route-indus";
-  else if (textToMatch.includes("durand")) matchedRouteId = "route-durand";
+  if (textToMatch.includes("karakoram") || /\bkkh\b/.test(textToMatch)) matchedRouteId = "route-kkh";
+  else if (/\bindus\b/.test(textToMatch)) matchedRouteId = "route-indus";
+  else if (/\bdurand\b/.test(textToMatch)) matchedRouteId = "route-durand";
   else if (textToMatch.includes("sino-pak") || textToMatch.includes("sino-pakistan")) matchedRouteId = "route-sinopak";
-  else if (textToMatch.includes("khyber")) matchedRouteId = "route-khyber";
-  else if (textToMatch.includes("bolan")) matchedRouteId = "route-bolan";
-  else if (textToMatch.includes("babusar")) matchedRouteId = "route-babusar";
-  else if (textToMatch.includes("lowari")) matchedRouteId = "route-lowari";
+  else if (/\bkhyber\b/.test(textToMatch)) matchedRouteId = "route-khyber";
+  else if (/\bbolan\b/.test(textToMatch)) matchedRouteId = "route-bolan";
+  else if (/\bbabusar\b/.test(textToMatch)) matchedRouteId = "route-babusar";
+  else if (/\blowari\b/.test(textToMatch)) matchedRouteId = "route-lowari";
   
   // 2. Check Organisation match
   let matchedOrgId = null;
-  if (textToMatch.includes("saarc")) matchedOrgId = "org-saarc";
-  else if (textToMatch.includes("eco") || textToMatch.includes("economic cooperation")) matchedOrgId = "org-eco";
-  else if (textToMatch.includes("sco") || textToMatch.includes("shanghai cooperation")) matchedOrgId = "org-sco";
-  else if (textToMatch.includes("oic") || textToMatch.includes("islamic cooperation")) matchedOrgId = "org-oic";
-  else if (textToMatch.includes("nato") || textToMatch.includes("north atlantic")) matchedOrgId = "org-nato";
-  else if (textToMatch.includes("united nations") || textToMatch.includes(" un ")) matchedOrgId = "org-un";
+  if (/\bsaarc\b/.test(textToMatch)) matchedOrgId = "org-saarc";
+  else if (/\beco\b/.test(textToMatch) || textToMatch.includes("economic cooperation")) matchedOrgId = "org-eco";
+  else if (/\bsco\b/.test(textToMatch) || textToMatch.includes("shanghai cooperation")) matchedOrgId = "org-sco";
+  else if (/\boic\b/.test(textToMatch) || textToMatch.includes("islamic cooperation")) matchedOrgId = "org-oic";
+  else if (/\bnato\b/.test(textToMatch) || textToMatch.includes("north atlantic")) matchedOrgId = "org-nato";
+  else if (textToMatch.includes("united nations") || /\bun\b/.test(textToMatch)) matchedOrgId = "org-un";
   
   // 3. Check Region match
   let matchedRegionId = null;
-  if (textToMatch.includes("kashmir")) matchedRegionId = "region-kashmir";
-  else if (textToMatch.includes("gaza")) matchedRegionId = "region-gaza";
-  else if (textToMatch.includes("taiwan")) matchedRegionId = "region-taiwan";
-  else if (textToMatch.includes("falkland")) matchedRegionId = "region-falkland";
-  else if (textToMatch.includes("kuril")) matchedRegionId = "region-kuril";
-  else if (textToMatch.includes("gibraltar")) matchedRegionId = "region-gibraltar";
-  else if (textToMatch.includes("malacca")) matchedRegionId = "region-malacca";
-  else if (textToMatch.includes("hormuz")) matchedRegionId = "region-hormuz";
-  else if (textToMatch.includes("bab-el-mandeb") || textToMatch.includes("mandeb")) matchedRegionId = "region-bab";
+  if (/\bkashmir\b/.test(textToMatch)) matchedRegionId = "region-kashmir";
+  else if (/\bgaza\b/.test(textToMatch)) matchedRegionId = "region-gaza";
+  else if (/\btaiwan\b/.test(textToMatch)) matchedRegionId = "region-taiwan";
+  else if (/\bfalkland\b/.test(textToMatch)) matchedRegionId = "region-falkland";
+  else if (/\bkuril\b/.test(textToMatch)) matchedRegionId = "region-kuril";
+  else if (/\bgibraltar\b/.test(textToMatch)) matchedRegionId = "region-gibraltar";
+  else if (/\bmalacca\b/.test(textToMatch)) matchedRegionId = "region-malacca";
+  else if (/\bhormuz\b/.test(textToMatch)) matchedRegionId = "region-hormuz";
+  else if (/\bbab-el-mandeb\b/.test(textToMatch) || /\bmandeb\b/.test(textToMatch)) matchedRegionId = "region-bab";
 
   // Trigger Map updates based on priorities
   if (matchedOrgId) {
@@ -1397,6 +1676,7 @@ function highlightOrganisationOnMap(orgId) {
       
       const memberMarker = L.marker(member.coords, { icon: memberIcon }).addTo(map);
       memberMarker.bindTooltip(`${member.name}`, {
+        permanent: true,
         direction: 'right',
         className: 'tactical-tooltip'
       });
@@ -1823,6 +2103,20 @@ function initMap() {
     position: 'bottomright'
   }).addTo(map);
   
+  // Plot Continental Blocks
+  if (typeof MAP_CONTINENTS !== 'undefined') {
+    MAP_CONTINENTS.forEach(cont => {
+      L.polygon(cont.coords, {
+        color: cont.color,
+        weight: 1,
+        dashArray: "4, 8",
+        fillColor: cont.color,
+        fillOpacity: 0.02,
+        interactive: false
+      }).addTo(map);
+    });
+  }
+  
   plotMapMarkers();
 }
 
@@ -1888,7 +2182,9 @@ function plotMapMarkers() {
           selectFile(dossier);
         });
         
-      marker.bindTooltip(`<strong>${dossier.dossier_name}</strong><br><span style="font-size: 10px; color: #a09eae;">${dossier.id}</span>`, {
+      const shortAnswer = (dossier.verified_answer && dossier.verified_answer.length < 20) ? `: ${dossier.verified_answer}` : '';
+      marker.bindTooltip(`<strong>${dossier.dossier_name}${shortAnswer}</strong>`, {
+        permanent: true,
         direction: 'top',
         offset: [0, -6],
         className: 'tactical-tooltip'
@@ -1898,9 +2194,10 @@ function plotMapMarkers() {
     }
   });
   
-  // Plot Routed Polylines
+  // Plot Routed Polylines with hover buffers
   MAP_ROUTES.forEach(route => {
-    const polyline = L.polyline(route.coords, {
+    // 1. Thin visible line
+    const visiblePolyline = L.polyline(route.coords, {
       color: route.color,
       weight: 4,
       dashArray: route.dashArray || null,
@@ -1909,7 +2206,14 @@ function plotMapMarkers() {
       className: 'marching-ants-route'
     }).addTo(map);
     
-    polyline.bindPopup(`
+    // 2. Thick invisible hover buffer line
+    const bufferPolyline = L.polyline(route.coords, {
+      weight: 20,
+      opacity: 0,
+      interactive: true
+    }).addTo(map);
+    
+    const popupContent = `
       <div style="font-family: var(--font-sans); color: var(--text-primary); padding: 5px; min-width: 200px;">
         <h4 style="margin: 0 0 6px 0; color: ${route.color}; font-family: var(--font-mono); border-bottom: 1px solid var(--border); padding-bottom:4px;">${route.name.toUpperCase()}</h4>
         <div style="font-size: 11px; margin-bottom: 4px;"><strong>Length:</strong> ${route.length}</div>
@@ -1917,23 +2221,26 @@ function plotMapMarkers() {
         <div style="font-size: 11px; margin-bottom: 6px; line-height: 1.4;"><strong>Connected places:</strong> ${route.places.join(" ➔ ")}</div>
         <p style="font-size: 11px; color: var(--text-secondary); margin: 0; line-height: 1.4;">${route.description}</p>
       </div>
-    `, {
+    `;
+    
+    bufferPolyline.bindPopup(popupContent, {
       className: 'tactical-popup'
     });
     
-    polyline.on('mouseover', function() {
-      if (this.options.color !== "#FF00FF") {
-        this.setStyle({ weight: 6, opacity: 1.0 });
-      }
+    bufferPolyline.on('mouseover', function() {
+      visiblePolyline.setStyle({ weight: 6, opacity: 1.0 });
     });
     
-    polyline.on('mouseout', function() {
-      if (this.options.color !== "#FF00FF") {
-        this.setStyle({ weight: 4, opacity: 0.8 });
-      }
+    bufferPolyline.on('mouseout', function() {
+      visiblePolyline.setStyle({ weight: 4, opacity: 0.8 });
     });
     
-    mapPolylines.push(polyline);
+    bufferPolyline.on('click', function() {
+      highlightRouteOnMap(route.id);
+    });
+    
+    mapPolylines.push(visiblePolyline);
+    mapPolylines.push(bufferPolyline);
   });
 }
 
