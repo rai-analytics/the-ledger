@@ -1,8 +1,6 @@
 // ── APP.JS ── THE LEDGER INTERACTIVE TWO-PANEL SPLIT CONTROLLER
 // Pair programmed for premium PPSC candidate UX: Dashboard + Folders + Map Routing + 100-MCQ Booklet + Atlas
 
-}
-
 
 // 1. App State
 let db = [];
