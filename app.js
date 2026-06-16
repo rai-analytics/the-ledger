@@ -1799,6 +1799,14 @@ function renderDossierInlineHTML(container, dossier) {
       <p class="detail-text">${dossier.context}</p>
     </div>
     
+    <div class="detail-block thought-bubble-box" style="margin-top: 16px; padding: 12px; border-radius: 6px;">
+      <div class="bubble-header" style="margin-bottom: 6px;">
+        <span class="bubble-icon">💭</span>
+        <strong>MNEMONIC THOUGHT BUBBLE // VISUAL HOOK</strong>
+      </div>
+      <p class="bubble-text" style="margin: 0; font-style: italic; font-size: 13px; line-height: 1.5; color: var(--color-accent);">"${dossier.visual_mnemonic || 'Visualize this card to store it in your archives.'}"</p>
+    </div>
+    
     <div class="reddington-block">
       <span class="detail-label">Raymond's Intel Briefing</span>
       <p class="reddington-story-text" id="dossier-reddington-story"></p>
@@ -1993,6 +2001,13 @@ function focusExamQuestion(idx) {
       mapMarkers[dossier.id].openTooltip();
     }
   }
+  
+  // Toggle thought bubble visibility
+  document.querySelectorAll('.mnemonic-bubble-container').forEach(el => el.style.display = 'none');
+  const bubble = document.getElementById(`bubble-${idx}`);
+  if (bubble) {
+    bubble.style.display = 'block';
+  }
 }
 
 
@@ -2088,6 +2103,18 @@ function renderExamBookletHTML(container) {
                 `;
               }).join('')}
             </div>
+            
+            <!-- Thought Bubble Mnemonic -->
+            <div class="mnemonic-bubble-container" id="bubble-${idx}" style="display: none; margin-top: 10px;">
+              <div class="thought-bubble-box">
+                <div class="bubble-header">
+                  <span class="bubble-icon">💭</span>
+                  <strong>MNEMONIC THOUGHT BUBBLE // VISUAL HOOK</strong>
+                </div>
+                <p class="bubble-text">"${q.dossier.visual_mnemonic || 'Visualize this card to store it in your archives.'}"</p>
+              </div>
+            </div>
+            
             ${reviewBoxHTML}
           </div>
         `;

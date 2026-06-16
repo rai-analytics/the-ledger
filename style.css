@@ -1557,3 +1557,50 @@ body {
   background-color: var(--bg-card) !important;
   box-shadow: 0 0 10px rgba(124, 92, 245, 0.2);
 }
+
+/* Mnemonic Thought Bubble Styles */
+.thought-bubble-box {
+  background: rgba(124, 92, 245, 0.08) !important;
+  border: 1px solid var(--border) !important;
+  border-left: 3px solid var(--color-accent) !important;
+  border-radius: 6px;
+  padding: 12px 14px;
+  margin-top: 10px;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.thought-bubble-box::after {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 30px;
+  border-width: 0 6px 6px 6px;
+  border-style: solid;
+  border-color: transparent transparent rgba(124, 92, 245, 0.08) transparent;
+  display: block;
+  width: 0;
+}
+
+.bubble-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+}
+
+.bubble-icon {
+  font-size: 14px;
+}
+
+.bubble-text {
+  margin: 6px 0 0 0;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--color-accent);
+  font-style: italic;
+}
